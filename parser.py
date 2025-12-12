@@ -275,7 +275,7 @@ def parse_in4_text(text: str) -> dict:
             log(
                 "IN4: NB без жодної ділянки (немає current_parcel/last_parcel) — "
                 "вузли цього суміжника підуть у orphan_nodes",
-                level=Qgis.Warning,
+                level=Qgis.Warning, # type: ignore
             )
             return
 
@@ -323,7 +323,7 @@ def parse_in4_text(text: str) -> dict:
             elif desc == "NB":
                 start_neighbour()
             else:
-                log(f"Невідомиий маркер блоку: {desc}(рядок {line_no})", level=Qgis.Warning)
+                log(f"Невідомиий маркер блоку: {desc}(рядок {line_no})", level=Qgis.Warning) # type: ignore
                 pass
             continue
 
@@ -341,7 +341,7 @@ def parse_in4_text(text: str) -> dict:
             if obj is None:
                 log(
                     f"IN4: метрична інформація поза будь-яким блоком, вузол збережено в orphan_nodes: {node} (рядок {line_no})",
-                    level=Qgis.Warning,
+                    level=Qgis.Warning, # type: ignore
                 )
                 result["orphan_nodes"].append(node)
                 geometry_found = True
@@ -353,7 +353,7 @@ def parse_in4_text(text: str) -> dict:
 
         obj = current_obj()
         if obj is None:
-            log(f"IN4: атрибути {pairs} поза будь-яким блоком (рядок {line_no})", level=Qgis.Warning)
+            log(f"IN4: атрибути {pairs} поза будь-яким блоком (рядок {line_no})", level=Qgis.Warning) # type: ignore
             continue
 
         for key, raw_val in pairs:
@@ -381,7 +381,7 @@ def parse_in4_text(text: str) -> dict:
             # усі інші атрибути — як раніше
             _assign_attr(obj, key, value)
     if not geometry_found:
-        log("У файлі не знайдено жодної метричної інформації (рядків N=...)", level=Qgis.Warning)
+        log("У файлі не знайдено жодної метричної інформації (рядків N=...)", level=Qgis.Warning)  # type: ignore
 
     return result
 
@@ -767,7 +767,7 @@ def create_cadastre_layers(data, crs_authid=None, add_to_project=False):
             x = n.get("X")
             y = n.get("Y")
             if x is None or y is None:
-                log(f"IN4: вузол без координат X/Y: {n}", level=Qgis.Warning)
+                log(f"IN4: вузол без координат X/Y: {n}", level=Qgis.Warning)  # type: ignore
                 continue
             try:
                 x_f = float(x)
@@ -862,7 +862,7 @@ def build_polyline_from_nodes(nodes):
     Використовується для NB (суміжники) та orphan-ліній.
     """
     if not nodes:
-        log("IN4: polyline без вузлів (nodes порожній)", level=Qgis.Warning)
+        log("IN4: polyline без вузлів (nodes порожній)", level=Qgis.Warning) # type: ignore
         return None
 
     # сортуємо за N, як і для полігонів
@@ -873,16 +873,16 @@ def build_polyline_from_nodes(nodes):
         x = n.get("Y")
         y = n.get("X")
         if x is None or y is None:
-            log(f"IN4: вузол без координат X/Y для polyline: {n}", level=Qgis.Warning)
+            log(f"IN4: вузол без координат X/Y для polyline: {n}", level=Qgis.Warning) # type: ignore
             continue
         try:
             pts.append(QgsPointXY(float(x), float(y)))
         except Exception as e:
-            log(f"IN4: не вдалося перетворити координати вузла {n} у float: {e}", level=Qgis.Warning)
+            log(f"IN4: не вдалося перетворити координати вузла {n} у float: {e}", level=Qgis.Warning) # type: ignore
             continue
 
     if len(pts) < 2:
-        log(f"IN4: недостатньо точок для лінії (знайдено {len(pts)})", level=Qgis.Warning)
+        log(f"IN4: недостатньо точок для лінії (знайдено {len(pts)})", level=Qgis.Warning) # type: ignore
         return None
 
     return QgsGeometry.fromPolylineXY(pts)
