@@ -1,0 +1,19 @@
+[general]
+name=UA IN4 importer Local
+qgisMinimumVersion=3.0
+description=Імпорт інформації з кадастрового обмінного файлу IN4
+version=0.1.1
+author=Стьопа
+email=brych92@gmail.com
+about = TBD.
+		
+		Інформацію про виявлені помилки, та побажання щодо роботи плагіну пишіть в JD Help chat в Telegram: https://t.me/+eq7gtxjTXYBjZmUy.
+		
+		Плагін розроблено в рамках проекту "Відкриті інструменти просторового планування для України".
+tracker=https://github.com/brych92/UA_IN4_Importer/issues
+repository=https://github.com/brych92/UA_IN4_Importer
+icon=icon.png
+homepage=https://github.com/brych92/UA_IN4_Importer
+changelog=
+ Version 0.1.1:
+ * Перша версія
